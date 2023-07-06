@@ -4,8 +4,23 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue')
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue')
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import('@/views/SignUpView.vue')
+  },
+  {
+    path: '/summoners/:regeion/:summonerName',
+    name: 'summoner',
+    component: () => import(/* webpacChunkName: "summoner" */ '@/views/SummonerView.vue')
+  }
 ]
 
 const router = createRouter({

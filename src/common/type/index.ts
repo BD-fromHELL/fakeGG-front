@@ -7,6 +7,18 @@ interface ISummoner {
     summonerLevel: number
 }
 
+interface Login {
+    email: string
+    password: string
+}
+
+interface SignUp {
+    username: string
+    password: string
+}
+
 export {
-    ISummoner
+    ISummoner,
+    Login,
+    SignUp
 }

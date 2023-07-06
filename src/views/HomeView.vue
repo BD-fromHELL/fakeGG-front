@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="logo-container">
-      <img title="제라스"
+    <div class="main-logo-container">
+      <img title="제라스" class="main-logo"
         src="https://opgg-static.akamaized.net/logo/20230601050340.43a02ea2187741c6af65599282dba854.png?image=q_auto,f_webp,w_auto&v=1686296929687"
         alt="op.gg logo ver.제라스">
     </div>
@@ -10,7 +10,7 @@
         <label for="search-input" class="label">Search</label>
         <input v-model="summonerName" type="text" id="search-input" placeholder="소환사명, 소환사명, ...">
       </div>
-      <button @click="getSummoner"> </button>
+      <button class="search-button" @click="getSummoner"> </button>
     </div>
     <p>{{ summoner }}</p>
   </div>
@@ -18,29 +18,23 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import API from '@/common/axios/api'
+import { useRouter } from 'vue-router';
 
 const summonerName = ref('');
-const summoner = ref()
-const getSummoner = async () => {
-  try {
-    const { data } = await API.getSummonerByName(summonerName.value)
-    console.log(data);
-    summoner.value = data
-  } catch (error) {
-    console.log(error)
-
-  }
-}
+const summoner = ref();
+const router = useRouter();
+const getSummoner = () => {
+  router.push(`/summoners/kr/${summonerName.value}`);
+};
 
 </script>
 
 
 <style lang="scss">
-.logo-container {
+.main-logo-container {
   margin: 4rem 0;
 
-  img {
+  .main-logo {
     display: block;
     margin: 0 auto;
   }
@@ -84,7 +78,7 @@ const getSummoner = async () => {
     outline: none;
   }
 
-  button {
+  .search-button {
     background-image: url('https://s-lol-web.op.gg/images/icon/icon-gg.svg');
     background-repeat: no-repeat;
     background-size: 42px;

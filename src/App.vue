@@ -14,7 +14,7 @@ import '@/assets/css/reset.css';
 <style lang="scss">
 .main {
   background-color: #ff8787;
-  height: 100vh;
-  padding: 0 2rem;
+  padding: 0 2rem 0 2rem;
+  min-height: 100vh;
 }
 </style>
