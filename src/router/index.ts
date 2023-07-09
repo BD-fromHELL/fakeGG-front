@@ -20,7 +20,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/summoners/:regeion/:summonerName',
     name: 'summoner',
     component: () => import(/* webpacChunkName: "summoner" */ '@/views/SummonerView.vue')
-  }
+  },
+  {
+    path: '/community',
+    name: 'community',
+    component: () => import('@/views/CommunityView.vue')
+  },
 ]
 
 const router = createRouter({

@@ -3,7 +3,7 @@
     <nav>
       <ul class="tab-list">
         <ul class="nav-list">
-          <li :class="`tab ${routeName === 'home' ? 'tab-selected' : ''}`" @click="navigateTo('home')">홈</li>
+          <li :class="`tab ${routeName === ' home'? 'tab-selected' : ''}`" @click="navigateTo('home')">홈</li>
           <li :class="`tab ${routeName === 'community' ? 'tab-selected' : ''}`" @click="navigateTo('community')">커뮤니티</li>
         </ul>
         <button class="header-login-button" @click="navigateTo('login')">로그인</button>
@@ -38,17 +38,6 @@ const navigateTo = (path: string) => {
   display: flex;
 }
 
-.tab {
-  text-align: center;
-  padding: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-
-  &:hover {
-    cursor: pointer;
-    color: white;
-  }
-}
-
 .header-login-button {
   color: white;
   background-color: #fc8e8e;
@@ -61,6 +50,18 @@ const navigateTo = (path: string) => {
   }
 
 }
+
+.tab {
+  text-align: center;
+  padding: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    cursor: pointer;
+    color: white;
+  }
+}
+
 
 
 .tab-selected {
