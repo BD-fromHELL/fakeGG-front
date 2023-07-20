@@ -1,10 +1,11 @@
 import { AxiosResponse } from "axios";
 import client from "./index";
-import { ISummoner } from "../type";
+import { IMatch } from "../type";
 
 const RIOT_API = {
-    getSummonerByName(summonerName: string): Promise<AxiosResponse<ISummoner, void>> {
-        return client.get(`riotApi/summoner/${summonerName}`);
+    getMatchesByName(summonerName: string): Promise<AxiosResponse<IMatch[], void>> {
+        return client.get(`riotApi/summoner/${summonerName}/matches}`);
+
     }
 
 }

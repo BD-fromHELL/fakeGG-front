@@ -1,7 +1,7 @@
 <template>
     <div class="community-layout">
 
-        <div class="top-banner">
+        <section class="top-banner">
             <h2>전체</h2>
             <div class="category-container">
 
@@ -15,26 +15,55 @@
                     <p>최신</p>
                 </button>
             </div>
-        </div>
-        <div class="article-list">
-            <div class="article-item">
-                <div class="article-visited">
-                    <img src="https://talk.op.gg/images/icon-vote-up.png" alt="up-icon">
-                    <div>333</div>
-                </div>
-                <div class="article-container">
-                    <div class="article-name">하하</div>
-                    <div class="article-info">
-                        <div class="article-recent">6시간전</div>
-                        <div class="article-writer">나나</div>
+        </section>
+        <section class="article-list">
+            <div v-for="(article, index) in articles" :key="index">
+                <div class="article-item" @click="$router.push(`community/${article.id}`)">
+                    <div class="article-visited">
+                        <img src="https://talk.op.gg/images/icon-vote-up.png" alt="up-icon">
+                        <div>{{ article.visited }}</div>
+                    </div>
+                    <div class="article-container">
+                        <div class="article-name">{{ article.title }}</div>
+                        <div class="article-info">
+                            <div class="article-recent">{{ article.timestamp }}</div>
+                            <div class="article-writer">{{ article.writer.memberName }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="article-page">
+            <button v-for="(pageNumber, index) in pages" :key="index">{{ pageNumber }}</button>
+        </section>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+import { Article } from '@/common/type/index'
+import ARTICLE_API from '@/common/axios/article'
+
+const articles = ref<Article[]>([])
+const nowPage = ref<number>()
+const pages = ref<number[]>([])
+
+const loadArticles = async () => {
+    try {
+        const { data } = await ARTICLE_API.getArticles();
+        articles.value = data.page;
+        for (let i = data.startPage; i <= data.endPage; i++) {
+            pages.value.push(i)
+        }
+        nowPage.value = data.nowPage;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+onMounted(loadArticles);
+
 </script>
 
 
@@ -112,5 +141,4 @@ h2 {
 .article-recent {
     margin-right: 1rem;
 }
-
 </style>

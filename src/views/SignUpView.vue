@@ -50,7 +50,7 @@ const focused = ref(false);
     flex-direction: column;
     width: 800px;
     padding: 0 10% 0 10%;
-    font-size: 1.5rem;
+    font-size: 1rem;
 
 }
 
@@ -70,18 +70,19 @@ const focused = ref(false);
 
 .signup-input {
 
-    margin: 2rem 0 2rem 0;
+    margin-bottom: 2rem;
     border: none;
     border-bottom: 1px #dddfe4 solid;
     width: 100%;
+    height: 1.5rem;
 
     &::placeholder {
         transition: all 0.3s ease-in-out;
-        font-size: 16px;
+        font-size: 1.2rem;
     }
 
     &:focus::placeholder {
-        font-size: 10px;
+        font-size: 0.5px;
     }
 }
 

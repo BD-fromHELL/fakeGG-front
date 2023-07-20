@@ -26,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'community',
     component: () => import('@/views/CommunityView.vue')
   },
+  {
+    path: '/community/:articleId',
+    name: 'article-detail',
+    component: () => import('@/views/ArticleView.vue')
+  }
 ]
 
 const router = createRouter({
