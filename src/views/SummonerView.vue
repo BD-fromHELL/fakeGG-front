@@ -1,7 +1,8 @@
 <template>
     <div class="summoner-contanier">
         <section class="profile-box">
-            <img src="https://opgg-static.akamaized.net/meta/images/profile_icons/profileIcon3463.jpg?image=q_auto,f_webp,w_auto&amp;v=1687932539766"
+            <img v-if="summonerInfo"
+                :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/profileicon/${summonerInfo.profileIconId}.png`"
                 alt="profile image">
             <div class="profile-info">
                 <p class="profile-name">{{ summonerName }}</p>
@@ -13,19 +14,19 @@
         <section class="content-box">
             <div class="content-left">
                 <div class="rank-box">
-                    <div class="header">솔로랭크</div>
+                    <div class="header">{{ summonerInfo?.queueType }}</div>
                     <div class="content">
                         <div class="" style="position: relative;">
-                            <img src="https://opgg-static.akamaized.net/images/medals_new/diamond.png?image=q_auto,f_webp,w_144&amp;v=1687932539766"
-                                width="72" alt="DIAMOND">
+                            <img :src="`https://opgg-static.akamaized.net/images/medals_new/${summonerInfo?.rank}.png?image=q_auto,f_webp,w_144&amp;v=1687932539766`"
+                                width="72" alt="medal">
                         </div>
                         <div class="info">
-                            <div class="tier">diamond 1</div>
-                            <div class="lp">92 LP</div>
+                            <div class="tier"> {{ summonerInfo?.tier }}</div>
+                            <div class="lp">{{ summonerInfo?.leaguePoints }} LP</div>
                         </div>
                         <div class="win-lose-container">
-                            <div class="win-lose">544승 541패</div>
-                            <div class="ratio">승률 50%</div>
+                            <div class="win-lose">{{ summonerInfo?.wins }}승 {{ summonerInfo?.losses }}패</div>
+                            <div class="ratio"> 승률 {{ summonerInfo?.winRate }}</div>
                         </div>
                     </div>
                 </div>
@@ -36,7 +37,7 @@
                 </div>
                 <div class="match-box">
                     <div v-for="(match, index) in matches" :key="index">
-                        <div :class="['match', { 'win': isTeamWin(), 'lose': !isTeamWin() }]">
+                        <div :class="['match', { 'win': match.isTeamWin, 'lose': !match.isTeamWin }]">
                             <div class="match-info1">
                                 <p class="match-type">
                                     {{ match.gameType }}
@@ -45,7 +46,7 @@
                                     {{ MatchDay(match.gameEndTimestamp) }}
                                 </p>
                                 <p class="match-result">
-                                    {{ isTeamWin() ? '승리' : '패배' }}
+                                    {{ match.isTeamWin ? '승리' : '패배' }}
                                 </p>
                                 <p class="match-time">
                                     {{ match.gameDuration }}
@@ -54,55 +55,68 @@
                             <div class="match-info2">
                                 <div class="info-box">
                                     <div class="champion-box">
-                                        <img class="champion" src="" alt="">
+                                        <img class="champion" src="" alt="chapion_icon">
                                     </div>
                                     <div class="spell-box">
-                                        <img class="spell" src="">
-                                        <img class="spell" src="">
+                                        <img class="spell"
+                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match.hero.summoner1Id}.png`">
+                                        <img class="spell"
+                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match.hero.summoner2Id}.png`">
                                     </div>
-                                    <div class="run-box">
-                                        <img class="run" src="">
-                                        <img class="run" src="">
+                                    <div class="rune-box">
+                                        <img class="rune"
+                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match.hero.rune1}`">
+                                        <img class="rune"
+                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match.hero.rune2}`">
                                     </div>
                                     <div class="kda-box">
                                         <p class="kda">
-                                            <span class="k">8</span>
+                                            <span class="k">{{ match.hero.kill }}</span>
                                             /
-                                            <span class="d">1</span>
+                                            <span class="d">{{ match.hero.death }}</span>
                                             /
-                                            <span class="a">1</span>
+                                            <span class="a">{{ match.hero.assist }}</span>
                                         </p>
-                                        <p class="ratio">9.0.0:1</p>
+                                        <p class="ratio">{{ match.hero.kda }}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <ul class="items-box">
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item0}.png`">
                                         </li>
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item1}.png`">
                                         </li>
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item2}.png`">
                                         </li>
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item3}.png`">
                                         </li>
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item4}.png`">
                                         </li>
                                         <li class="items">
-                                            <img src="http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${{  }}.png">
-
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item5}.png`">
                                         </li>
                                         <li class="items">
+                                            <img
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item6}.png`">
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="match-participants">
-
+                                <div v-for="(participant, index) in match.participants" :key="index">
+                                    <div>{{ participant.summonerName }} </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -116,16 +130,24 @@
 import RIOT_API from '@/common/axios/riot';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { IMatch, ITeam } from '@/common/type/index'
+import { IMatch, ITeam, IParticipant, ISummonerInfo } from '@/common/type/index'
 
 const route = useRoute();
 const router = useRouter();
-const summonerName = route.params.summonerName;
+const summonerName = ref(route.params.summonerName as string);
+const summonerInfo = ref<ISummonerInfo>();
 const matches = ref<IMatch[]>([]);
 
-const summoner = ref({
-})
 
+const getSummonerInfo = async (summonerName: string) => {
+    try {
+        const { data } = await RIOT_API.getSummonerInfo(summonerName);
+        summonerInfo.value = data;
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
 const getMatches = async (summonerName: string) => {
     try {
         const { data } = await RIOT_API.getMatchesByName(summonerName);
@@ -154,22 +176,11 @@ const MatchDay = (gameEndTimestamp: number): string => {
     }
 };
 
-const isTeamWin = (summonerName: string): boolean | null => {
-    for (const match of matches) {
-        const participant = match.participants.find((p) => p.summonerName === summonerName);
-        if (participant) {
-            const team = match.teams.find((t) => t.teamId === participant.teamId);
-            if (team) {
-                return team.win;
-            }
-        }
-    }
-    return null;
-};
 
 onMounted(() => {
-    if (typeof summonerName === 'string') {
-        getMatches(summonerName)
+    if (typeof summonerName.value === 'string') {
+        getMatches(summonerName.value)
+        getSummonerInfo(summonerName.value)
     }
 
     console.log("mount!")

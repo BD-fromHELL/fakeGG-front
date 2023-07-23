@@ -33,7 +33,6 @@
                 </div>
             </div>
         </section>
-
         <section class="article-page">
             <button v-for="(pageNumber, index) in pages" :key="index">{{ pageNumber }}</button>
         </section>
@@ -57,10 +56,13 @@ const loadArticles = async () => {
             pages.value.push(i)
         }
         nowPage.value = data.nowPage;
+        console.log(data);
     } catch (error) {
         console.log(error);
     }
 };
+
+
 
 onMounted(loadArticles);
 

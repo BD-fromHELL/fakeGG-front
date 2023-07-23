@@ -22,6 +22,8 @@ interface IMatch {
     gameCreation: number
     gameDuration: number
     gameEndTimestamp: number
+    isTeamWin: boolean
+    hero: IParticipant
     teams: ITeam[]
     participants: IParticipant[]
 }
@@ -48,6 +50,7 @@ interface IParticipant {
     wardsKilled: number
     cs: number
     csPerMinute: number
+    teamId: number
     item0: number
     item1: number
     item2: number
@@ -91,6 +94,30 @@ interface Writer {
     memberPassword: string
     memberBirth: number
 }
+
+interface Entries {
+    queueType: string
+    tier: string
+    rank: string
+    summonerName: string
+    leaguePoints: number
+    wins: number
+    losses: number
+}
+
+interface ISummonerInfo {
+    profileIconId: number;
+    summonerLevel: number
+    queueType: string
+    tier: string
+    rank: string
+    summonerName: string
+    leaguePoints: number
+    wins: number
+    losses: number
+    winRate: number
+}
+
 export {
     ISummoner,
     IMatch,
@@ -100,5 +127,7 @@ export {
     SignUp,
     Article,
     ArticleResponseDto,
-    Writer
+    Writer,
+    Entries,
+    ISummonerInfo
 }
