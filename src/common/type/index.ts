@@ -25,17 +25,18 @@ interface IMatch {
     isTeamWin: boolean
     hero: IParticipant
     teams: ITeam[]
-    participants: IParticipant[]
+    participantsA: IParticipant[]
+    participantsB: IParticipant[]
 }
 
 interface IParticipant {
-    championId: number
+    championName: string
     championLevel: number
     summonerName: string
     rankTier: string
     summonerLevel: number
-    summoner1Id: number
-    summoner2Id: number
+    summoner1: string
+    summoner2: string
     rune1: number
     rune2: number
     kill: number

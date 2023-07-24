@@ -5,7 +5,7 @@
                 :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/profileicon/${summonerInfo.profileIconId}.png`"
                 alt="profile image">
             <div class="profile-info">
-                <p class="profile-name">{{ summonerName }}</p>
+                <p class="profile-name">{{ summonerInfo?.summonerName }}</p>
                 <div class="button-box">
                     <button class="button-refresh">전적 갱신</button>
                 </div>
@@ -32,90 +32,116 @@
                 </div>
             </div>
             <div class="content-right">
-                <div class="stat-box">
+                <!-- <div class="stat-box">
 
-                </div>
+                </div> -->
                 <div class="match-box">
                     <div v-for="(match, index) in matches" :key="index">
                         <div :class="['match', { 'win': match.isTeamWin, 'lose': !match.isTeamWin }]">
                             <div class="match-info1">
                                 <p class="match-type">
-                                    {{ match.gameType }}
+                                    협곡
                                 </p>
                                 <p class="match-result">
-                                    {{ MatchDay(match.gameEndTimestamp) }}
+                                    {{ matchDay(match.gameEndTimestamp) }}
                                 </p>
                                 <p class="match-result">
                                     {{ match.isTeamWin ? '승리' : '패배' }}
                                 </p>
                                 <p class="match-time">
-                                    {{ match.gameDuration }}
+                                    {{ matchTime(match.gameDuration) }}
                                 </p>
                             </div>
                             <div class="match-info2">
                                 <div class="info-box">
                                     <div class="champion-box">
-                                        <img class="champion" src="" alt="chapion_icon">
+                                        <img class="champion"
+                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/champion/${match?.hero?.championName}.png`"
+                                            alt="chapion_icon">
                                     </div>
                                     <div class="spell-box">
                                         <img class="spell"
-                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match.hero.summoner1Id}.png`">
+                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match?.hero?.summoner1}`">
                                         <img class="spell"
-                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match.hero.summoner2Id}.png`">
+                                            :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/spell/${match?.hero?.summoner2}`">
                                     </div>
                                     <div class="rune-box">
                                         <img class="rune"
-                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match.hero.rune1}`">
+                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match?.hero?.rune1}`">
                                         <img class="rune"
-                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match.hero.rune2}`">
+                                            :src="`https://ddragon.leagueoflegends.com/cdn/img/${match?.hero?.rune2}`">
                                     </div>
                                     <div class="kda-box">
                                         <p class="kda">
-                                            <span class="k">{{ match.hero.kill }}</span>
+                                            <span class="k">{{ match?.hero?.kill }}</span>
                                             /
-                                            <span class="d">{{ match.hero.death }}</span>
+                                            <span class="d">{{ match?.hero?.death }}</span>
                                             /
-                                            <span class="a">{{ match.hero.assist }}</span>
+                                            <span class="a">{{ match?.hero?.assist }}</span>
                                         </p>
-                                        <p class="ratio">{{ match.hero.kda }}</p>
+                                        <p class="ratio">{{ match?.hero?.kda.toFixed(2) }} : 1 평점</p>
                                     </div>
                                 </div>
                                 <div>
                                     <ul class="items-box">
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item0}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item0}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item1}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item1}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item2}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item2}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item3}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item3}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item4}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item4}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item5}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item5}.png`">
                                         </li>
                                         <li class="items">
                                             <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match.hero.item6}.png`">
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item6}.png`">
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="match-participants">
-                                <div v-for="(participant, index) in match.participants" :key="index">
-                                    <div>{{ participant.summonerName }} </div>
+                            <div class="match-info3">
+                                <div class="detail-record">제어 와드 {{ match?.hero?.detectorWardsPlaced }}</div>
+                                <div class="detail-record">CS {{ match?.hero?.cs }} ({{ match?.hero?.csPerMinute.toFixed(1)
+                                }})</div>
+                            </div>
+                            <div class="match-info4">
+                                <div class="participants-box">
+                                    <div v-for="(participant, index) in match.participantsA" :key="index">
+
+                                        <div class="participants">
+                                            <img class="small-champion"
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/champion/${participant?.championName}.png`"
+                                                alt="small-chapion_icon">
+                                            {{ participant.summonerName }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="participants-box">
+                                    <div v-for="(participant, index) in match.participantsB" :key="index">
+
+                                        <div class="participants">
+                                            <img class="small-champion"
+                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.14.1/img/champion/${participant?.championName}.png`"
+                                                alt="small-chapion_icon">
+                                            {{ participant.summonerName }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -128,16 +154,15 @@
 
 <script setup lang="ts">
 import RIOT_API from '@/common/axios/riot';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { IMatch, ITeam, IParticipant, ISummonerInfo } from '@/common/type/index'
 
 const route = useRoute();
 const router = useRouter();
-const summonerName = ref(route.params.summonerName as string);
+const summonerName = computed(() => route.params.summonerName);
 const summonerInfo = ref<ISummonerInfo>();
 const matches = ref<IMatch[]>([]);
-
 
 const getSummonerInfo = async (summonerName: string) => {
     try {
@@ -148,6 +173,7 @@ const getSummonerInfo = async (summonerName: string) => {
         console.log(error);
     }
 }
+
 const getMatches = async (summonerName: string) => {
     try {
         const { data } = await RIOT_API.getMatchesByName(summonerName);
@@ -158,7 +184,7 @@ const getMatches = async (summonerName: string) => {
     }
 }
 
-const MatchDay = (gameEndTimestamp: number): string => {
+const matchDay = (gameEndTimestamp: number): string => {
     const currentTime = Date.now();
     const timeDiff = currentTime - gameEndTimestamp;
 
@@ -176,14 +202,21 @@ const MatchDay = (gameEndTimestamp: number): string => {
     }
 };
 
+const matchTime = (gameDuration: number): string => {
+    const minutes = Math.floor(gameDuration / 60);
+    const seconds = gameDuration % 60;
+    return `${minutes}분 ${seconds}초`;
+}
+
 
 onMounted(() => {
+    console.log("mount!")
     if (typeof summonerName.value === 'string') {
         getMatches(summonerName.value)
         getSummonerInfo(summonerName.value)
+        console.log("success~!~!")
     }
 
-    console.log("mount!")
 })
 </script>
 
@@ -195,10 +228,10 @@ onMounted(() => {
 // }
 .profile-box {
     display: flex;
-    padding: 1rem 0;
+    padding: 1rem;
     background-color: #495057;
     margin-bottom: 1rem;
-    width: 100%;
+    width: 95%;
 
     img {
         width: 100px;
@@ -236,7 +269,8 @@ onMounted(() => {
 .content-box {
     display: flex;
     justify-content: space-between;
-    width: 1024px;
+    width: 95%;
+    padding: 1rem;
 
     .content-left {
         width: 33%;
@@ -338,7 +372,7 @@ onMounted(() => {
                 }
 
                 .match-info2 {
-                    width: 50%;
+                    width: 32%;
                     display: flex;
                     flex-direction: column;
 
@@ -368,13 +402,13 @@ onMounted(() => {
                             }
                         }
 
-                        .run-box {
+                        .rune-box {
                             margin-right: 1px;
                             display: flex;
                             flex-direction: column;
                             justify-content: space-between;
 
-                            .run {
+                            .rune {
                                 width: 22px;
                                 height: 22px;
                                 border-radius: 11px;
@@ -400,8 +434,12 @@ onMounted(() => {
                                 }
 
                                 .a {
-                                    color: #ffffff
+                                    color: #ffffff;
                                 }
+                            }
+
+                            .ratio {
+                                color: #adb5bd;
                             }
                         }
                     }
@@ -424,8 +462,41 @@ onMounted(() => {
                     }
                 }
 
-                .match-participants {
+                .match-info3 {
+                    width: 18%;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 2rem;
+
+                    .detail-record {
+                        color: #adb5bd;
+                        font-size: 0.5rem;
+                    }
+                }
+
+                .match-info4 {
                     width: 30%;
+                    display: flex;
+
+                    .participants-box {
+                        width: 50%;
+
+                        .participants {
+                            .small-champion {
+                                width: 11px;
+                                height: 11px;
+                                border-radius: 5px;
+
+                            }
+
+                            color: #adb5bd;
+                            font-size: 0.8rem;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
                 }
             }
 

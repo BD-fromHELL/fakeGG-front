@@ -4,7 +4,7 @@ import { IMatch, ISummonerInfo } from "../type";
 
 const RIOT_API = {
     getMatchesByName(summonerName: string): Promise<AxiosResponse<IMatch[], void>> {
-        return client.get(`riotApi/summoner/${summonerName}/matches}`);
+        return client.get(`riotApi/summoner/${summonerName}/matches`);
 
     },
     getSummonerInfo(summonerName: string): Promise<AxiosResponse<ISummonerInfo, void>> {
