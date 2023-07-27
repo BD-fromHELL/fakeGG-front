@@ -9,31 +9,64 @@
 
             <div class="signup-input-field">
                 <h2>생년월일 입력</h2>
-                <input class="signup-input" type="text" placeholder="생년월일" v-mask="''" v-model="birth"
-                    @focus="focused = true" @blur="focused = false">
+                <input class="signup-input" type="text" placeholder="생년월일" v-model="birthInput" @focus="focused = true"
+                    @blur="focused = false">
+            </div>
+            <div class="signup-input-field">
+                <h2>이름 입력</h2>
+                <input class="signup-input" type="text" placeholder="이름" v-model="nameInput" @focus="focused = true"
+                    @blur="focused = false">
             </div>
             <div class="signup-input-field">
                 <h2>이메일 입력</h2>
-                <input class="signup-input" type="text" placeholder="이메일" v-mask="''" v-model="email"
-                    @focus="focused = true" @blur="focused = false">
+                <input class="signup-input" type="text" placeholder="이메일" v-model="emailInput" @focus="focused = true"
+                    @blur="focused = false">
             </div>
             <div class="signup-input-field">
                 <h2>비밀번호 입력</h2>
-                <input class="signup-input" type="text" placeholder="비밀번호" v-mask="''" v-model="password"
-                    @focus="focused = true" @blur="focused = false">
+                <input class="signup-input" type="text" placeholder="비밀번호" v-model="passwordInput" @focus="focused = true"
+                    @blur="focused = false">
             </div>
-            <button class="signup-button" type="submit">회원가입</button>
+            <button :disabled="!infoWritten" class="signup-button" type="submit" @click.prevent="signUp">회원가입</button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import MEMBER_API from '@/common/axios/member';
+import { SignUp } from '@/common/type';
+import router from '@/router';
+import { computed, ref } from 'vue';
 
-const birth = ref('');
-const email = ref('');
-const password = ref('');
+const birthInput = ref('');
+const emailInput = ref('');
+const nameInput = ref('');
+const passwordInput = ref('');
 const focused = ref(false);
+
+const infoWritten = computed(() => !!emailInput.value && !!passwordInput.value && !!birthInput.value && !!nameInput.value)
+
+const signUp = async () => {
+    try {
+        const singUpInfo: SignUp = {
+            birth: birthInput.value,
+            email: emailInput.value,
+            name: nameInput.value,
+            password: passwordInput.value
+        }
+
+        const { data } = await MEMBER_API.signup(singUpInfo);
+
+        alert("가입되었습니다~~");
+        console.log(data);
+        router.go(-1);
+        router.push("/");
+
+    } catch (error) {
+        console.log(error)
+        alert("가입실패ㅠㅇㅠ");
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -65,32 +98,42 @@ const focused = ref(false);
 }
 
 .signup-input-field {
+    font-size: 0.9rem;
     width: 80%;
+    margin-bottom: 0.1rem;
+
+    .signup-input {
+        margin-top: 0.2rem;
+        margin-bottom: 2rem;
+        border: none;
+        border-bottom: 1px #dddfe4 solid;
+        width: 100%;
+        height: 1.5rem;
+
+        &::placeholder {
+            transition: all 0.3s ease-in-out;
+            font-size: 1rem;
+        }
+
+        &:focus::placeholder {
+            font-size: 0.5px;
+        }
+    }
 }
 
-.signup-input {
-
-    margin-bottom: 2rem;
-    border: none;
-    border-bottom: 1px #dddfe4 solid;
-    width: 100%;
-    height: 1.5rem;
-
-    &::placeholder {
-        transition: all 0.3s ease-in-out;
-        font-size: 1.2rem;
-    }
-
-    &:focus::placeholder {
-        font-size: 0.5px;
-    }
-}
 
 .signup-button {
-    background-color: #dddfe4;
+    background-color: #f06595;
     border: none;
     width: 80%;
     height: 2.5rem;
     margin-bottom: 2rem;
+
+    cursor: pointer;
+
+    &:disabled {
+        cursor: default;
+        background-color: #f065966b;
+    }
 }
 </style>

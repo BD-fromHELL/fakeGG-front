@@ -1,3 +1,20 @@
+interface Login {
+    email: string
+    password: string
+}
+
+interface SignUp {
+    email: string
+    name: string
+    password: string
+    birth: string
+}
+
+interface LoginResponse {
+    accessToken: string
+    refreshToken: string
+}
+
 interface ISummoner {
     accountId: string
     profileIconId: number
@@ -6,17 +23,6 @@ interface ISummoner {
     puuid: string
     summonerLevel: number
 }
-
-interface Login {
-    email: string
-    password: string
-}
-
-interface SignUp {
-    username: string
-    password: string
-}
-
 interface IMatch {
     gameType: string
     gameCreation: number
@@ -120,6 +126,7 @@ interface ISummonerInfo {
 }
 
 export {
+    LoginResponse,
     ISummoner,
     IMatch,
     IParticipant,

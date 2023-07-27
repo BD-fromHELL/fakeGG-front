@@ -9,7 +9,7 @@ client.interceptors.request.use(
         const token = localStorage.getItem("X-AUTH-TOKEN");
 
         if (token) {
-            config.headers!["X-AUTH-TOKEN"] = token;
+            config.headers["X-AUTH-TOKEN"] = token;
         }
         return config
     }, (error) => {

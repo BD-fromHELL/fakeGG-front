@@ -8,7 +8,7 @@
     <div class="search-container">
       <div class="search-bar">
         <label for="search-input" class="label">Search</label>
-        <input v-model="summonerName" type="text" id="search-input" placeholder="소환사명, 소환사명, ...">
+        <input class="search-input" v-model="summonerName" type="text" id="search-input" placeholder="소환사명 ...">
       </div>
       <button class="search-button" @click="getSummoner"> </button>
     </div>
@@ -68,15 +68,25 @@ const getSummoner = () => {
     font-style: normal;
   }
 
-  input {
+  .search-input {
     border: none;
     width: 100%;
+
+    &:focus-visible {
+
+      outline: none;
+    }
+
+    &::placeholder {
+      transition: all 0.3s ease-in-out;
+      font-size: 0.8rem;
+    }
+
+    &:focus::placeholder {
+      font-size: 0.3rem;
+    }
   }
 
-  input:focus-visible {
-
-    outline: none;
-  }
 
   .search-button {
     background-image: url('https://s-lol-web.op.gg/images/icon/icon-gg.svg');

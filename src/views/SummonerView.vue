@@ -26,7 +26,7 @@
                         </div>
                         <div class="win-lose-container">
                             <div class="win-lose">{{ summonerInfo?.wins }}승 {{ summonerInfo?.losses }}패</div>
-                            <div class="ratio"> 승률 {{ summonerInfo?.winRate }}</div>
+                            <div class="ratio"> 승률 {{ summonerInfo?.winRate.toFixed(0) }} %</div>
                         </div>
                     </div>
                 </div>
@@ -85,32 +85,32 @@
                                 <div>
                                     <ul class="items-box">
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item0}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item0}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item1}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item1}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item2}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item2}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item3}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item3}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item4}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item4}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item5}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item5}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                         <li class="items">
-                                            <img
-                                                :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item6}.png`">
+                                            <img :src="`http://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${match?.hero?.item6}.png`"
+                                                onerror="this.style.display='none'">
                                         </li>
                                     </ul>
                                 </div>
@@ -155,11 +155,10 @@
 <script setup lang="ts">
 import RIOT_API from '@/common/axios/riot';
 import { computed, onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { IMatch, ITeam, IParticipant, ISummonerInfo } from '@/common/type/index'
+import { useRoute } from 'vue-router';
+import { IMatch, ISummonerInfo } from '@/common/type/index'
 
 const route = useRoute();
-const router = useRouter();
 const summonerName = computed(() => route.params.summonerName);
 const summonerInfo = ref<ISummonerInfo>();
 const matches = ref<IMatch[]>([]);

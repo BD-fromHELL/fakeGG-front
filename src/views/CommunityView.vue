@@ -62,7 +62,16 @@ const loadArticles = async () => {
     }
 };
 
-
+// const goPageIfLoggedIn = (foodId: number) => {
+//       if (store.getters.isLoggedIn) {
+//         router.push({
+//           name: "write-review",
+//           params: { foodId: Number(foodId) },
+//         });
+//       } else {
+//         alert("로그인해주세요!");
+//       }
+//     };
 
 onMounted(loadArticles);
 
@@ -73,7 +82,8 @@ onMounted(loadArticles);
 .community-layout {
     display: flex;
     flex-direction: column;
-    width: 1000px;
+    // width: 1000px;
+    min-width: 500px;
     margin: 7rem;
     padding: 1.5rem;
     background-color: white;
@@ -108,7 +118,7 @@ h2 {
 }
 
 
-.article-list {}
+// .article-list {}
 
 .article-item {
     display: flex;

@@ -7,7 +7,7 @@
 
             <div class="login-form">
                 <h2>간편 로그인</h2>
-                <button class="kakao-login">
+                <button @click="kakao_login" class="kakao-login">
                     <img src="https://cdn.imweb.me/upload/S20210304872ba49a108a8/89a68d1e3674a.png" alt="kakao-logo">
                     Kakao로 로그인</button>
                 <button class="facebook-login">
@@ -19,7 +19,7 @@
 
                 <h2 class="email-login-title">이메일 로그인</h2>
                 <input class="input-box" v-model="emailInput" type="text" id="email-input" placeholder="이메일 주소">
-
+                0
                 <input class="input-box" v-model="passwordInput" type="text" id="email-input" placeholder="비밀번호">
 
                 <div class="login-assist">
@@ -55,6 +55,10 @@ const router = useRouter();
 
 const infoWritten = computed(() => !!emailInput.value && !!passwordInput.value)
 
+const kakao_login = () => {
+    window.location.href = 'http://localhost:9000/oauth2/authorization/kakao'
+}
+
 const signIn = async () => {
     try {
         const loginInfo: Login = {
@@ -64,12 +68,15 @@ const signIn = async () => {
 
         const { data } = await MEMBER_API.login(loginInfo);
         store.dispatch("saveToken", {
-            token: data,
-            username: emailInput.value,
+            token: data.accessToken,
+            username: loginInfo.email,
         });
+        alert("환영해요~");
+        console.log(data.accessToken)
+        console.log(data.refreshToken)
         router.push("/");
     } catch (error) {
-        errorMsg.value = "이메일 또는 비밀번호가 일치하지 않습니다만..";
+        errorMsg.value = "이메일 또는 비밀번호가 일치하지 않습니다!..";
         console.log(error);
     }
 };

@@ -3,10 +3,15 @@
     <nav>
       <ul class="tab-list">
         <ul class="nav-list">
-          <li :class="`tab ${routeName === ' home'? 'tab-selected' : ''}`" @click="navigateTo('home')">홈</li>
+          <li :class="`tab ${routeName === ' home' ? 'tab-selected' : ''}`" @click="navigateTo('home')">홈</li>
           <li :class="`tab ${routeName === 'community' ? 'tab-selected' : ''}`" @click="navigateTo('community')">커뮤니티</li>
         </ul>
-        <button class="header-login-button" @click="navigateTo('login')">로그인</button>
+        <template v-if="isLoggedIn">
+          <button class="header-login-button" @click="logout()">로그아웃</button>
+        </template>
+        <template v-else>
+          <button class="header-login-button" @click="navigateTo('login')">로그인</button>
+        </template>
       </ul>
     </nav>
   </header>
@@ -14,16 +19,29 @@
 
 
 <script lang="ts" setup>
+import store from '@/store';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const routeName = computed(() => route.name);
+const isLoggedIn = computed(() => store.getters.isLoggedIn);
 
 const navigateTo = (path: string) => {
   router.push({ name: path });
 };
+
+const logout = () => {
+  try {
+    store.dispatch("removeToken");
+    router.push("/");
+    router.go(0);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 </script>
 
 
