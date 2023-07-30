@@ -2,7 +2,10 @@
     <div class="community-layout">
 
         <section class="top-banner">
-            <h2>전체</h2>
+            <div class="banner-header">
+                <h2>전체</h2>
+                <button @click="$router.push(`/community/writeArticle`)" class="write-article">글쓰기</button>
+            </div>
             <div class="category-container">
 
                 <button class="category-button">
@@ -18,12 +21,12 @@
         </section>
         <section class="article-list">
             <div v-for="(article, index) in articles" :key="index">
-                <div class="article-item" @click="$router.push(`community/${article.id}`)">
+                <div class="article-item">
                     <div class="article-visited">
                         <img src="https://talk.op.gg/images/icon-vote-up.png" alt="up-icon">
                         <div>{{ article.visited }}</div>
                     </div>
-                    <div class="article-container">
+                    <div class="article-container" @click="$router.push(`community/${article.id}`)">
                         <div class="article-name">{{ article.title }}</div>
                         <div class="article-info">
                             <div class="article-recent">{{ article.timestamp }}</div>
@@ -34,7 +37,7 @@
             </div>
         </section>
         <section class="article-page">
-            <button v-for="(pageNumber, index) in pages" :key="index">{{ pageNumber }}</button>
+            <button class="article-page-button" v-for="(pageNumber, index) in pages" :key="index">{{ pageNumber }}</button>
         </section>
     </div>
 </template>
@@ -90,9 +93,27 @@ onMounted(loadArticles);
     box-shadow: 0 2px 2px 2px rgb(0, 0, 0, .2);
 }
 
-h2 {
-    font-size: 2em;
-    padding-bottom: 2rem;
+.banner-header {
+    display: flex;
+    justify-content: space-between;
+
+
+    h2 {
+        font-size: 2em;
+        padding-bottom: 2rem;
+    }
+
+    .write-article {
+        border: none;
+        background-color: #f065966b;
+        height: 2rem;
+        font-weight: bold;
+        color: rgb(40, 40, 40);
+        width: 4rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+
 }
 
 .top-banner {
@@ -118,7 +139,9 @@ h2 {
 }
 
 
-// .article-list {}
+.article-list {
+    margin-bottom: 3rem;
+}
 
 .article-item {
     display: flex;
@@ -144,13 +167,33 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
+
+    .article-name {
+        font-size: 1.5rem;
+    }
+
+    .article-info {
+        display: flex;
+        font-size: 0.8rem;
+
+        .article-recent {
+            margin-right: 1rem;
+        }
+
+    }
+
 }
 
-.article-info {
+
+.article-page {
     display: flex;
-}
+    justify-content: center;
 
-.article-recent {
-    margin-right: 1rem;
+    .article-page-button {
+        border: none;
+        background-color: inherit;
+        cursor: pointer;
+    }
 }
 </style>

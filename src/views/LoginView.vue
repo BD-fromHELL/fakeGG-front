@@ -72,6 +72,7 @@ const signIn = async () => {
             username: loginInfo.email,
         });
         alert("환영해요~");
+        console.log(loginInfo)
         console.log(data.accessToken)
         console.log(data.refreshToken)
         router.push("/");

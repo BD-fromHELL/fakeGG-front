@@ -30,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/community/:articleId',
     name: 'article-detail',
     component: () => import('@/views/ArticleView.vue')
+  },
+  {
+    path: '/community/writeArticle',
+    name: 'article-write',
+    component: () => import('@/views/WriteArticleView.vue')
   }
 ]
 

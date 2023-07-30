@@ -86,6 +86,27 @@ interface Article {
     writer: Writer
     visited: number
     timestamp: number
+    comments: Comment[]
+}
+
+interface PostArticle {
+    writer: string
+    title: string
+    contents: string
+}
+
+interface Comment {
+    writer: string
+    contents: string
+    parentComment: Comment
+    childComments: Comment[]
+    likes: number
+    dislikes: number
+}
+
+interface PostComment {
+    memberName: string
+    contents: string
 }
 
 interface ArticleResponseDto {
@@ -134,6 +155,9 @@ export {
     Login,
     SignUp,
     Article,
+    PostArticle,
+    Comment,
+    PostComment,
     ArticleResponseDto,
     Writer,
     Entries,
