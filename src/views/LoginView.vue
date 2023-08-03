@@ -19,7 +19,7 @@
 
                 <h2 class="email-login-title">이메일 로그인</h2>
                 <input class="input-box" v-model="emailInput" type="text" id="email-input" placeholder="이메일 주소">
-                0
+
                 <input class="input-box" v-model="passwordInput" type="text" id="email-input" placeholder="비밀번호">
 
                 <div class="login-assist">
