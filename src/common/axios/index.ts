@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const client = axios.create({
-    baseURL: 'http://3.39.177.177:9000',
+    baseURL: 'http://ec2-54-180-145-192.ap-northeast-2.compute.amazonaws.com:9000',
 })
 
 client.interceptors.request.use(
